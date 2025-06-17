@@ -1,0 +1,44 @@
+.ratings {
+    width: 80px;
+    max-width: 80px;
+    display: inline-block;
+    margin-right: 8px;
+
+    &-wrapper {
+        width: 100%;
+        display: inline-block;
+        contain: paint;
+
+        span {
+            background: var(--brand);
+            color: transparent;
+            background-clip: text !important;
+    
+            &.part-33 { 
+                background: linear-gradient(90deg, var(--brand) 33%, var(--brand-lighter) 10%);
+            }
+            &.part-50 { 
+                background: linear-gradient(90deg, var(--brand) 50%, var(--brand-lighter) 10%);
+            }
+            &.part-66 { 
+                background: linear-gradient(90deg, var(--brand) 66%, var(--brand-lighter) 10%);
+            }
+            &.part-80 { 
+                background: linear-gradient(90deg, var(--brand) 80%, var(--brand-lighter) 10%);
+            }
+            &.empty {
+                background: var(--brand-lighter);
+            }
+        }
+    }
+}
+
+.card-content:hover {
+    .ratings-wrapper {
+        animation: rating-animation .5s ease-in-out forwards;
+    }
+}
+
+@keyframes rating-animation {
+    from { width: 0%; } to { width: 100%;}
+}
