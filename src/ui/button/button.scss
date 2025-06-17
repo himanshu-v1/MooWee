@@ -1,0 +1,102 @@
+.button {
+    min-width: 58px;
+    height: 45px;
+    border: none;
+    border-radius: 5px;
+    width: auto;
+    padding: 0 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    div:first-child {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 8px 0 8px;
+        background-color: var(--brand-light);
+        color: white;
+        border-radius: 5px 0 0 5px;
+    }
+    
+    &.small {
+        height: 30px;
+    }
+
+    &.rounded {
+        width: 45px;
+        border-radius: 25px;
+    }
+
+    &.primary {
+        background-color: #600606;
+    }
+
+    &.secondary:not(.transition) {
+        background-color: #ffffff;
+        color: black;
+
+        &:hover {
+            background-color: rgb(220, 97, 97);
+            color: white;
+        }
+    }
+
+    &.secondary.transition {
+        animation: bg-color-reverse .2s forwards;
+        color: var(--foreground);
+        transition: all .2s ease-in-out;
+
+        &:hover {
+            animation: bg-color-change .2s forwards;
+            color: var(--background);
+            transition: all .2s ease-in-out;
+
+            div:first-child {
+                background-color: var(--background);
+                color: var(--foreground);
+            }
+        }
+    }
+}
+
+@keyframes bg-color-change {
+    0% {
+        background: radial-gradient(rgb(220, 97, 97) 0%, white 1%, white 100%);
+    }
+
+    25%{
+        background: radial-gradient(rgb(220, 97, 97) 25%, white 50%, white 100%);
+    }
+
+    50% {
+        background: radial-gradient(rgb(220, 97, 97) 50%, white 75%, white 100%);
+    }
+
+    75% {
+        background: radial-gradient(rgb(220, 97, 97) 75%, white 100%, white 100%);
+    }
+
+    100% {
+        background: radial-gradient(rgb(220, 97, 97) 100%, white 0%, white 0%);
+    }
+}
+
+@keyframes bg-color-reverse {
+    0% {
+        background: radial-gradient(white 0%, rgb(220, 97, 97) 1%, rgb(220, 97, 97) 100%);
+    }
+    25% {
+        background: radial-gradient(white 25%, rgb(220, 97, 97) 50%, rgb(220, 97, 97) 100%);
+    }
+    50% {
+        background: radial-gradient(white 50%, rgb(220, 97, 97) 75%, rgb(220, 97, 97) 100%);
+    }
+    75%{
+        background: radial-gradient(white 75%, rgb(220, 97, 97) 100%, rgb(220, 97, 97) 100%);
+    }
+    100% {
+        background: radial-gradient(white 100%, rgb(220, 97, 97) 0%, rgb(220, 97, 97) 0%);
+    }
+}
