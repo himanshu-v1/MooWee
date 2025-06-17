@@ -1,11 +1,15 @@
 function getApiUrl() {
-  return process.env.REACT_APP_API_URL;
+  return process.env.NEXT_PUBLIC_API_URL;
 }
 
 async function getWallData() {
-    const response = await fetch(`${getApiUrl()}/wall`);
+  try {
+    const response = await fetch(`${getApiUrl()}/wall/movies`);
     const data = await response.json();
     return data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export { getWallData };

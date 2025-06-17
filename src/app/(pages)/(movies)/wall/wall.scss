@@ -1,0 +1,7 @@
+.wall {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 16.7% 16.7% 16.7% 16.7% 16.7% 16.7%;
+    grid-template-rows: auto;
+    // row-gap: 25px;
+}
