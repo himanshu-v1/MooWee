@@ -1,34 +1,45 @@
-// import Image from "next/image";
 'use client';
 import { useEffect } from "react";
 import { getWallData } from "@/lib/api";
-// import { useAppDispatch } from "@/lib/hooks";
 import { setCards } from "@/lib/feature/card/cardSlice";
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/lib/hooks";
-import styles from "./page.module.scss";
+import { toast } from "react-toastify";
+import { cards } from "@/test/data/card";
+import ICard from "@/ui/card/typeCard";
+// import Image from "next/image";
+// import { useAppDispatch } from "@/lib/hooks";
+// import styles from "./page.module.scss";
+import './app.scss';
 
 export default function Home() {
-  const router = useRouter();
   // const dispatch = useAppDispatch();
+  const router = useRouter();
   const store = useAppStore();
 
   useEffect(() => {
+    console.log(process.env.NODE_ENV);
     getWallData().then((data) => {
       if(data.msg.toLowerCase() === 'success') {
-        store.dispatch(setCards(data.data));
-        router?.push("/wall");
+        setData(data.data);
       }
-    }).catch(err => console.log(err));
+    }).catch((err) => {
+      console.log(err);
+      toast.error("Server unreachable! Enjoy DUMDUM Data!");
+      setTimeout(() => {
+        setData(cards);
+      }, 4000);
+    });
   }, []);
 
-  const handleClick = () => {
-    window.location.href = "/wall";
+  const setData = (data: ICard[]) => {
+    store.dispatch(setCards(data));
+    router?.push("/wall");
   };
 
   return (
-    <div className={styles.page}>
-      <h1 onClick={handleClick}>Moowee</h1>
+    <div className="page">
+      <h1 className="logo">{`< MooWee >`}</h1>
     </div>
   );
 }

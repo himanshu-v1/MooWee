@@ -17,6 +17,7 @@ export default function Card({ cardData } : { cardData: ICard }) {
 
   useEffect(()=>{
     manageTimer();
+    handleMouse(isMouseIn);
   },[isMouseIn]);
 
   useEffect(()=>{
@@ -41,23 +42,36 @@ export default function Card({ cardData } : { cardData: ICard }) {
     }
   };
 
-  const handleMouse = (mouseIn: boolean) => {
-    setIsMouseIn(mouseIn);
-    const ele = document.querySelector(".page") as HTMLElement;
-    if(mouseIn) {
-      ele?.style?.setProperty("--image", `url(${cardData.poster})`);
-      ele?.classList.add("animate");
-    } else {
-      ele?.style?.setProperty("--image", ``);
-      ele?.classList.remove("animate");
+  const handleMouse = (mouseIn?: boolean) => {
+    const ele = document.querySelector(".page.landing") as HTMLElement;
+    let leaveId: ReturnType<typeof setTimeout> | undefined = undefined;
+
+    ele?.style?.setProperty("--image", `background: white`);
+
+    if(!leaveId) {
+      leaveId = setTimeout(() => {
+        console.log(mouseIn);
+        if(mouseIn) {
+          ele?.style?.setProperty("--image", `url(${cardData.poster})`);
+          ele?.classList.remove("static");
+          ele?.classList.add("animate");
+          clearTimeout(leaveId);
+        }
+        else {
+          ele?.style?.setProperty("--image", ``);
+          ele?.classList.add("static");
+          ele?.classList.remove("animate");
+        }
+      }, 400);
     }
   };
 
   return (
     <div className="card">
       <a href={`/discussion/${data.id}`} target="_self" className="card-content" 
-        onMouseEnter={() => {handleMouse(true)}} 
-        onMouseLeave={() => {handleMouse(false)}} >
+        onMouseEnter={() => {setIsMouseIn(true);}} 
+        onMouseLeave={() => {setIsMouseIn(false);}}
+        onMouseOver={() => {setIsMouseIn(true);}} >
 
         <section className="art">
           <Image className="poster" src={data.poster || "/img/no-poster.png"} width={100} height={100} alt="" />

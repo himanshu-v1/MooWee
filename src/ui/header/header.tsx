@@ -1,16 +1,18 @@
+'use client';
 import Image from "next/image";
 import Button from "../button/button";
-import "./header.scss";
 import Nav from "../nav/nav";
+import "./header.scss";
 
 export default function Header() {
+
   const handleClick = () => {
     console.log("Redirect to login page!");
   }
 
   return (
     <div className="header">
-      <section className="logo">
+      <section tabIndex={0} className="logo" onClick={() => {window.location.href = "/";}}>
         <Image width={58} height={30} src="/images/logo.png" alt="Logo" />
       </section>
       <section className="nav">

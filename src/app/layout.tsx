@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from 'next/script';
 // import styles from "./page.module.css";
-import "./globals.scss";
 import StoreProvider from "./StoreProvider";
+import { ToastContainer } from "react-toastify";
+import "./globals.scss";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
             {children}
           {/* </div> */}
         </StoreProvider>
+        <ToastContainer />
       </body>
     </html>
   );
