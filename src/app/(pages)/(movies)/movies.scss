@@ -1,4 +1,6 @@
-.page {
+.page.landing {
+    --image: url(/wall.jpg);
+
     display: grid;
     // grid-template-rows: 20px 1fr 20px;
     grid-template-rows: 1fr;
@@ -15,24 +17,59 @@
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        left: -5%;
+        width: 110%;
+        height: 110%;
         background-image: var(--image); /* Replace with your image URL */
         background-size: cover;
-        filter: blur(10px); /* Adjust the blur intensity */
-        z-index: -1;
+        z-index: -2;
         background-position-y: 0%;
-        opacity: 0;
-        background-color: rgba(0, 0, 0, 0.5);
         background-blend-mode: multiply;
+        background-attachment: fixed;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        backdrop-filter: blur(2px);
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: -1;
+    }
+
+    &.static {
+        &::before {
+            background-repeat: repeat-x;
+            background-position-x: 0%;
+            background-size: 99%;
+            margin-top: calc(var(--top-buffer) + 2px);
+            animation: staticBG 1000s linear infinite, opaci 1s linear forwards;
+        }
     }
 
     &.animate {
         &::before {
             background-position-y: 600%;
-            opacity: 1;
-            transition: background-position-y 120s linear, opacity 1s ease-in-out;
+            transition: background-position-y 120s linear;
+            animation: opac 1s linear forwards;
         }
     }
+}
+
+@keyframes staticBG {
+    from { background-position-x: 0%;}
+    to {background-position-x: 60000%; }
+}
+
+@keyframes opac {
+    from {opacity: 0.1;}
+    to {opacity: 1;}
+}
+
+@keyframes opaci {
+    from {filter: opacity(0.1);}
+    to {filter: opacity(1);}
 }

@@ -7,7 +7,7 @@ export default function Layout({children}:{children:React.ReactNode}) {
     return (
         <>
             <Header />
-            <div className={`landing page`}>
+            <div className={`landing page static`}>
                 {children}
             </div>
             <Footer />
