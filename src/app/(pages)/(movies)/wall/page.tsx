@@ -2,32 +2,38 @@
 import Card from "@/ui/card/card";
 import SubNav from "@/ui/subNav/subnav";
 import { useEffect, useRef } from "react";
-// import { cards } from "@/test/data/card";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppSelector, useAppStore } from "@/lib/hooks";
+import { getWallData } from "@/lib/api";
+import { setCards } from "@/lib/feature/card/cardSlice";
+import { toast } from "react-toastify";
+import { cards } from "@/test/data/card";
+import ICard from "@/ui/card/typeCard";
 import './wall.scss';
 
 export default function Landing() {
-    // const store = useAppStore();
     // const dispatch = useAppDispatch();
-    const cards = useAppSelector(state => state.cards);
+    const store = useAppStore();
+    const cardsState = useAppSelector(state => state.cards);
     const wallRef = useRef<HTMLDivElement>(null);
-    const transition = () => {
-        wallRef?.current?.querySelectorAll('.card-content').forEach((card: Element) => {
-            const observer = new IntersectionObserver(([entry]) => {
-                card.parentElement?.classList.toggle('show', entry.isIntersecting);
-                // observer.unobserve(card);
-                // if(entry.isIntersecting) {
-                //     card.parentElement?.classList.add('show');
-                //     observer.unobserve(card);
-                // }
-            }, { threshold: 0.1 });
 
-            observer.observe(card);
+    const fetchData = () => {
+        getWallData().then((data) => {
+        if(data.msg.toLowerCase() === 'success') {
+            setData(data.data);
+        }
+        }).catch((err) => {
+            console.log(err);
+            toast.error("Server unreachable! Enjoy DUMDUM Data!");
+            setData([...cards, ...cards]);
         });
     };
 
+    const setData = (data: ICard[]) => {
+        store.dispatch(setCards(data));
+    };
+
     useEffect(() => {
-        transition();
+        fetchData();
     }, []);
 
     return (
@@ -35,7 +41,7 @@ export default function Landing() {
             <SubNav />
             <div className="wall" ref={wallRef}>
                 { 
-                    cards.map((card, index) => (
+                    cardsState.map((card, index) => (
                         <Card key={index} cardData={card}/>
                     ))
                 }

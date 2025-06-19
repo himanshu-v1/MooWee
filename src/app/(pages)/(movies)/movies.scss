@@ -8,14 +8,18 @@
     align-items: start;
     justify-items: center;
     min-height: 100svh;
-    padding: 0 80px 40px 80px;
+    padding: 0 80px 40px;
     gap: 32px;
     font-family: var(--font-geist-sans);
     margin-top: var(--top-buffer);
 
+    @media screen and (max-width: 768px) {
+        padding: 0 40px 40px;
+    }
+
     &::before {
         content: '';
-        position: absolute;
+        position: fixed;
         top: 0;
         left: -5%;
         width: 110%;
@@ -30,7 +34,7 @@
 
     &::after {
         content: '';
-        position: absolute;
+        position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
@@ -42,7 +46,7 @@
 
     &.static {
         &::before {
-            background-repeat: repeat-x;
+            background-repeat: repeat;
             background-position-x: 0%;
             background-size: 99%;
             margin-top: calc(var(--top-buffer) + 2px);

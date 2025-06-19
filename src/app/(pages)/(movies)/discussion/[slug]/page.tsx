@@ -5,7 +5,7 @@ import { use } from "react";
 export default function Page({ params }: { params: Promise<{ slug: string; }>;}) {
     const { slug } = use(params);
 
-    const getNavItems = () => [<i key="home" className="fa-solid fa-house"></i>];
+    const getNavItems = () => [<i key="home" onClick={() => window.location.href = "/wall"} tabIndex={0} className="fa-solid fa-house"></i>];
 
     return (
         <>

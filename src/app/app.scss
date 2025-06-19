@@ -16,7 +16,7 @@
 
     .logo {
         text-shadow: 0px 5px 5px rgba(0,0,0,0.3);
-        animation: logo 800ms linear 1.8s forwards;
+        animation: logo .5s linear 1.8s forwards;
     }
 
     &.slow-anim {
@@ -28,7 +28,7 @@
             circularBwdReverse 1s linear 3s forwards;
 
         .logo {
-            animation: logo 800ms linear 3.2s forwards;
+            animation: logo .8s linear 3.2s forwards;
         }
     }
 }
