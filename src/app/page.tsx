@@ -1,14 +1,14 @@
 "use client";
 import { useEffect } from "react";
-// import Image from "next/image";
-// import { useAppDispatch } from "@/lib/hooks";
-// import styles from "./page.module.scss";
 import './app.scss';
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   useEffect(() => {
     setTimeout(() => {
-      window.location.href="/wall";
+      router.push("/wall");
     }, 3500);
   }, [])
 
