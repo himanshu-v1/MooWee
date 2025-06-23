@@ -40,8 +40,12 @@
         right: 0;
         height: 100vh;
         backdrop-filter: blur(2px);
-        background-color: rgba(0, 0, 0, 0.6);
         z-index: -1;
+    }
+    &.static, &.animate {
+        &::after {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
     }
 
     &.static {
@@ -56,24 +60,27 @@
 
     &.animate {
         &::before {
-            background-position-y: 600%;
-            transition: background-position-y 120s linear;
-            animation: opac 1s linear forwards;
+            animation: BG 240s linear infinite, opac 1s linear forwards;
         }
     }
 }
 
+@keyframes BG {
+    from { background-position-y: 0%; }
+    to { background-position-y: 600%; }
+}
+
 @keyframes staticBG {
-    from { background-position-x: 0%;}
-    to {background-position-x: 60000%; }
+    from { background-position-x: 0%; }
+    to { background-position-x: 60000%; }
 }
 
 @keyframes opac {
-    from {opacity: 0.1;}
-    to {opacity: 1;}
+    from { opacity: 0.1; }
+    to { opacity: 1; }
 }
 
 @keyframes opaci {
-    from {filter: opacity(0.1);}
-    to {filter: opacity(1);}
+    from { filter: opacity(0.1); }
+    to { filter: opacity(1); }
 }

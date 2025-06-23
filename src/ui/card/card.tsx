@@ -3,8 +3,10 @@ import Rating from "../rating/rating";
 import "./card.scss";
 import { useEffect, useState, useRef } from "react";
 import ICard from "./typeCard";
+import { useRouter } from "next/navigation";
 
 export default function Card({ cardData } : { cardData: ICard }) {
+  const router = useRouter();
   const [data, setData] = useState<ICard>({} as ICard);
   const [time, setTime] = useState(0);
   const [isMouseIn, setIsMouseIn] = useState(false);
@@ -49,7 +51,7 @@ export default function Card({ cardData } : { cardData: ICard }) {
   };
 
   const handleMouse = (mouseIn?: boolean) => {
-    const ele = document.querySelector(".page.landing") as HTMLElement;
+    const ele = window.page?.current;
     let leaveId: ReturnType<typeof setTimeout> | undefined = undefined;
 
     ele?.style?.setProperty("--image", `background: white`);
@@ -89,15 +91,22 @@ export default function Card({ cardData } : { cardData: ICard }) {
     }
   };
 
+  const redirect = (e: React.MouseEvent) => {
+    e.preventDefault();
+    router.push(`/discussion/${data.id}`);
+  }
+
   return (
     <div className="card">
-      <a href={`/discussion/${data.id}`} target="_self" className="card-content" 
-        onMouseEnter={() => {setIsMouseIn(true);}} 
+      <a href="#" target="_self" className="card-content"
+        onClick={(e) => redirect(e)}
+        onMouseEnter={() => {setIsMouseIn(true);}}
         onMouseLeave={() => {setIsMouseIn(false);}}
         onMouseOver={() => {setIsMouseIn(true);}} ref={cardRef} >
 
         <section className="art">
-          <Image className="poster" src={data.poster || "/img/no-poster.png"} width={100} height={100} alt="" />
+          <Image className="poster" src={data.poster || process.env.NEXT_PUBLIC_DUMMY_IMG || ''} 
+            width={100} height={100} alt="" />
         </section>
         <section className="info">
           <h2 className="title">
