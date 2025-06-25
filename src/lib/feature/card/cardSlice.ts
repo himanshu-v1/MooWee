@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import ICard from '@/ui/card/typeCard';
+import ICard from '@/types/typeCard';
 // import { initialCard } from '@/ui/card/typeCard';
 // import { cards } from '@/test/data/card';
 import { RootState } from '@/lib/store';

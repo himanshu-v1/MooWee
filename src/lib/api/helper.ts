@@ -1,20 +1,53 @@
-import ICard from "@/ui/card/typeCard";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ICard, IAddnDetails, initialAddnDetails } from "@/types/typeCard";
 // import { setCards } from "../feature/card/cardSlice";
-import { getWallData } from "./api";
+import { getWallData, getMovieData } from "./api";
 import { toast } from "react-toastify";
 import { cards } from "@/test/data/card";
+// import { Interface } from "readline";
 // import { useAppStore } from "../hooks";
 
-export const fetchData = async (): Promise<ICard[]> => {
+export function fetchData(endpoint: string, args?: any): Promise<ICard[]>;
+export function fetchData(endpoint: string, args?: any, type?: string): Promise<IAddnDetails>;
+
+export async function fetchData(endpoint: string, args?: any): Promise<ICard[] | IAddnDetails> {
+    let endp = undefined;
+    let _args = {}
+    switch(endpoint) {
+        case 'wall':
+            endp = getWallData;
+            break;
+        case 'movie':
+            endp = getMovieData;
+            _args = {...args}; 
+            break;
+        default: endp = () => {};
+            break;
+    }
+
     try {
-        const data = await getWallData();
+        const data = await endp({..._args});
         if(data.msg.toLowerCase() === 'success') {
             return data.data;
         }
         return [];
-    } catch (err) {
+    } catch (err: any) {
         console.log(err);
-        toast.error("Server unreachable! Enjoy DUMDUM Data!");
+        if(err.cause?.status === 500) {
+            setTimeout(() => {
+                toast.error("Server unreachable! Enjoy DUMDUM Data!");
+            }, 3500);
+        } else if (err.cause?.status === 204) {
+            toast.error(`${err.message}!`);
+        }
+
+        if(endpoint === 'movie') {
+            return {...initialAddnDetails};
+        }
         return [...cards, ...cards];
     }
 };
+// export const fetch = async (endpoint: string, args?: any) => {
+
+//     return await fetchData(endpoint, args);
+// };

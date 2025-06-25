@@ -6,7 +6,10 @@ import { RefObject, useRef } from "react";
 
 export default function Layout({children}:{children:React.ReactNode}) {
     const pageRef = useRef<HTMLDivElement>(null);
-    window.page = (pageRef as RefObject<HTMLDivElement>);
+    
+    if(typeof window !== 'undefined') {
+        window.page = (pageRef as RefObject<HTMLDivElement>);
+    }
 
     return (
         <>
