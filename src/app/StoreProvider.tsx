@@ -14,9 +14,8 @@ export default function StoreProvider({ children }: { children: React.ReactNode}
     
     useEffect(() => {
         const loadData = async () => {
-            const data = await fetchData();
+            const data = await fetchData('wall');
             if (data.length) {
-                console.log(data);
                 store.current?.dispatch(setCards(data));
             }
         };

@@ -12,4 +12,17 @@ async function getWallData() {
   }
 }
 
-export { getWallData };
+async function getMovieData({id}: { id?: string}) {
+  try {
+    const response = await fetch(`${getApiUrl()}/direct/${id}`);
+    if(response.status === 204) {
+      throw new Error('Invalid Id', {cause: { status: 204 }});
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export { getWallData, getMovieData };

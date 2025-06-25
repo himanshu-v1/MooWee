@@ -1,6 +1,6 @@
 export const cards = [
     {
-        id: 'The-Prestige-(Film)',
+        id: 'The_Prestige_(film)',
         poster: "https://upload.wikimedia.org/wikipedia/en/d/d2/Prestige_poster.jpg?20160501081711",
         title: "The Prestige",
         year: 2006,

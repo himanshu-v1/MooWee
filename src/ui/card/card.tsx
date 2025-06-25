@@ -2,7 +2,7 @@ import Image from "next/image";
 import Rating from "../rating/rating";
 import "./card.scss";
 import { useEffect, useState, useRef } from "react";
-import ICard from "./typeCard";
+import { ICard } from "../../types/typeCard";
 import { useRouter } from "next/navigation";
 
 export default function Card({ cardData } : { cardData: ICard }) {

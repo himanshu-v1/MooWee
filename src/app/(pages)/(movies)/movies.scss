@@ -41,6 +41,7 @@
         height: 100vh;
         backdrop-filter: blur(2px);
         z-index: -1;
+        background-color: var(--background);
     }
     &.static, &.animate {
         &::after {
