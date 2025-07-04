@@ -8,7 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     setTimeout(() => {
-      router.push("/wall");
+      router.push("/movies");
     }, 3500);
   }, [])
 

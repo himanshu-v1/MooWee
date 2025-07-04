@@ -6,7 +6,8 @@ export interface ICard {
     director: string,
     rating: string,
     genre: string[] | string,
-    time: number
+    time: number,
+    episodes?: number,
 };
 
 export interface IAddnDetails {

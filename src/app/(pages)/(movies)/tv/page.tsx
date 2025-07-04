@@ -3,9 +3,9 @@ import Card from "@/ui/card/card";
 import SubNav from "@/ui/subNav/subnav";
 import { useRef } from "react";
 import { useAppSelector } from "@/lib/hooks";
-import './wall.scss';
+import '../movies/wall.scss';
 
-export default function Landing() {
+export default function TvWall() {
     const cardsState = useAppSelector(state => state.cards);
     const wallRef = useRef<HTMLDivElement>(null);
 
@@ -14,7 +14,7 @@ export default function Landing() {
             <SubNav />
             <div className="wall" ref={wallRef}>
                 { 
-                    cardsState.map((card, index) => (
+                    cardsState && cardsState.map((card, index) => (
                         <Card key={index} cardData={card}/>
                     ))
                 }

@@ -12,14 +12,14 @@ export default function StoreProvider({ children }: { children: React.ReactNode}
         store.current = makeStore();
     }
     
-    useEffect(() => {
-        const loadData = async () => {
-            const data = await fetchData('wall');
-            if (data.length) {
-                store.current?.dispatch(setCards(data));
-            }
-        };
-        
+    const loadData = async () => {
+        const data = await fetchData('movies');
+        if (data.length) {
+            store.current?.dispatch(setCards(data));
+        }
+    };
+
+    useEffect(() => {    
         loadData();
     }, []);
     
