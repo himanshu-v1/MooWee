@@ -12,6 +12,16 @@ async function getWallData() {
   }
 }
 
+async function getWallTvData() {
+  try {
+    const response = await fetch(`${getApiUrl()}/wall/tv`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getMovieData({id}: { id?: string}) {
   try {
     const response = await fetch(`${getApiUrl()}/direct/${id}`);
@@ -25,4 +35,4 @@ async function getMovieData({id}: { id?: string}) {
   }
 }
 
-export { getWallData, getMovieData };
+export { getWallData, getMovieData, getWallTvData };

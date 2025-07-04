@@ -7,8 +7,8 @@ import { RootState } from '@/lib/store';
 // const initialState: ICard[] = [...cards];
 const initialState: ICard[] = [];
 
-export const cardSlice = createSlice({
-  name: 'cardSlice',
+export const cardTvSlice = createSlice({
+  name: 'cardTvSlice',
   initialState,
   reducers: {
     setCards(state, action) {
@@ -20,6 +20,6 @@ export const cardSlice = createSlice({
   }
 });
 
-export const { setCards } = cardSlice.actions;
+export const { setCards } = cardTvSlice.actions;
 export const getState = ( state: RootState ) => state.cards;
-export default cardSlice.reducer;
+export default cardTvSlice.reducer;

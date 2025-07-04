@@ -126,8 +126,16 @@ export default function Card({ cardData } : { cardData: ICard }) {
             </span>
             <span className="genre">{ Array.isArray(data.genre) ? data.genre?.join(", ") : data?.genre}</span>
             <span className="runtime">
-              <i className="fa-solid fa-clock-rotate-left"></i>
-              <span>{time || data.time || "--"}</span> min
+              {
+                sessionStorage.getItem("wall") !== 'tv' ? 
+                  <>
+                    <i className="fa-solid fa-clock-rotate-left"></i>
+                    <span>{time || data.time || "--"}</span> min
+                  </>
+                : <>
+                  <span>{data.episodes || "--"}</span> episodes
+                </>
+              }
             </span>
           </section>
         </section>
