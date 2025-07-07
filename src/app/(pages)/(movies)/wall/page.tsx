@@ -4,7 +4,7 @@ import SubNav from "@/ui/subNav/subnav";
 import { useEffect, useRef, useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { fetchData } from "@/lib/api/helper";
-import { setCards } from "@/lib/feature/card/cardTvSlice";
+import { setTvCards } from "@/lib/feature/card/cardTvSlice";
 import { ICard } from "@/types/typeCard";
 import './wall.scss';
 
@@ -17,24 +17,25 @@ export default function Landing() {
     const wallRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        setCardsState([] as ICard[]);
+    }, [wall, movieCards, tvCards]);
+
+    useEffect(() => {
         if(wall === 'tv') {
             if(tvCards.length === 0) {
                 loadData();
             } else {
                 setCardsState(tvCards);
             }
-            console.log("tvCards", tvCards);
-            console.log("movieCards", movieCards);
         } else {
             setCardsState(movieCards);
         }
-    }, [wall, tvCards, movieCards]);
+    }, [cardsState]);
 
     const loadData = async () => {
-        const data = await fetchData('tv');
-        console.log("data", data);
+        const data = await fetchData('tvs');
         if (data.length) {
-            dispatch(setCards(data));
+            dispatch(setTvCards(data));
         }
     };
 
@@ -43,7 +44,7 @@ export default function Landing() {
             <SubNav />
             <div className="wall" ref={wallRef}>
                 { 
-                    cardsState && cardsState.map((card, index) => (
+                    cardsState.map((card, index) => (
                         <Card key={index} cardData={card}/>
                     ))
                 }

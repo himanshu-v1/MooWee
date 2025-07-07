@@ -13,10 +13,7 @@ export const cardSlice = createSlice({
   reducers: {
     setCards(state, action) {
       return [...action.payload];
-    },
-    // getCards(state) {
-    //     return state;
-    // }
+    }
   }
 });
 
