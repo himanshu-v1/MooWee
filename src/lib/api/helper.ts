@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ICard, IAddnDetails, initialAddnDetails } from "@/types/typeCard";
 // import { setCards } from "../feature/card/cardSlice";
-import { getWallData, getMovieData, getWallTvData } from "./api";
+import { getWallData, getMovieData, getWallTvData, getTvData } from "./api";
 import { toast } from "react-toastify";
 import { cards } from "@/test/data/card";
 // import { Interface } from "readline";
@@ -19,10 +19,14 @@ export async function fetchData(endpoint: string, args?: any): Promise<ICard[] |
             break;
         case 'movie':
             endp = getMovieData;
-            _args = {...args}; 
+            _args = {...args};
+            break;
+        case 'tvs':
+            endp = getWallTvData;
             break;
         case 'tv':
-            endp = getWallTvData;
+            endp = getTvData;
+            _args = {...args};
             break;
         default: endp = () => {};
             break;

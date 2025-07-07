@@ -35,4 +35,17 @@ async function getMovieData({id}: { id?: string}) {
   }
 }
 
-export { getWallData, getMovieData, getWallTvData };
+async function getTvData({id}: { id?: string}) {
+  try {
+    const response = await fetch(`${getApiUrl()}/directtv/${id}`);
+    if(response.status === 204) {
+      throw new Error('Invalid Id', {cause: { status: 204 }});
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export { getWallData, getMovieData, getWallTvData, getTvData };

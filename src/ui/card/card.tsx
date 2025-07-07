@@ -82,12 +82,12 @@ export default function Card({ cardData } : { cardData: ICard }) {
   };
 
   const animateScroll = () => {
-    const titleEl = cardRef.current!.querySelector('.name span')!;
-    const elWidth = titleEl.getBoundingClientRect().width;
+    const titleEl = cardRef.current?.querySelector('.name span');
+    const elWidth = titleEl?.getBoundingClientRect().width;
     const parentWidth = cardRef.current!.getBoundingClientRect().width;
 
-    if(elWidth > parentWidth) {
-      titleEl.parentElement?.classList.add('scroll');
+    if(elWidth && elWidth > parentWidth) {
+      titleEl?.parentElement?.classList.add('scroll');
     }
   };
 

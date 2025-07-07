@@ -6,7 +6,7 @@ export default function Nav() {
 
   const handleClick = (id: string) => {
     sessionStorage.setItem('wall', id);
-    router.refresh();
+    router.push('/wall');
   };
 
   return (

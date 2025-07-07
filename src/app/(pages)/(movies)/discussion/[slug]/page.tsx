@@ -24,12 +24,22 @@ export default function Page({ params }: { params: Promise<{ slug: string; }>;})
     const [details, setDetails] = useState<ICard>();
     const [additionalDetails, setAdditionalDetails] = useState<IAddnDetails>();
     const [isLoading, setIsLoading] = useState(true);
-    const data = useAppSelector(state => state.cards);
+    const [data, setData] = useState<Array<ICard>>([]);
+    const movieData = useAppSelector(state => state.cards);
+    const tvData = useAppSelector(state => state.tvCards);
     const previousDep = useRef<deps>({data: {}, details: undefined});
+    const wall = sessionStorage.getItem('wall') || '';
 
     useEffect(() => {
         setBg(window.page?.current);
-        fetchData('movie', { id: slug }, 'addn').then(res => {
+
+        if(wall === 'movie') {
+            setData(movieData);
+        } else {
+            setData(tvData);
+        }
+
+        fetchData(wall, { id: slug }, 'addn').then(res => {
             setAdditionalDetails({...res});
             document.dispatchEvent(new CustomEvent('setData'));
         });
@@ -65,8 +75,16 @@ export default function Page({ params }: { params: Promise<{ slug: string; }>;})
     const finisher = () => {
         const ele = discMain.current!;
         setTimeout(() => {
-            ele.querySelectorAll('sup').forEach(e => {
+            ele.querySelectorAll('sup, .mw-editsection').forEach(e => {
                 e.parentElement?.removeChild(e);
+            });
+            ele.querySelectorAll('a').forEach((e) => {
+                if(e.href.includes('/wiki/') && !e.href.includes('org')) {
+                    const href = `https://en.wikipedia.org${e.getAttribute('href')}`;
+                    console.log(e.getAttribute('href'));
+                    e.href = href;
+                    e.target = "_blank";
+                }
             });
             setIsLoading(false);
             addEffect();
@@ -76,7 +94,6 @@ export default function Page({ params }: { params: Promise<{ slug: string; }>;})
     const addEffect = () => {
         window.addEventListener('scroll', () => {
             const top = window.page.current.getBoundingClientRect().top;
-            console.log(top);
             if(top < 80) {
                 discMain.current?.classList.add("fixed-header");
             } else {

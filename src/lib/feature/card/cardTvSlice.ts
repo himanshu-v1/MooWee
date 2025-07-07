@@ -11,15 +11,12 @@ export const cardTvSlice = createSlice({
   name: 'cardTvSlice',
   initialState,
   reducers: {
-    setCards(state, action) {
+    setTvCards(state, action) {
       return [...action.payload];
-    },
-    // getCards(state) {
-    //     return state;
-    // }
+    }
   }
 });
 
-export const { setCards } = cardTvSlice.actions;
-export const getState = ( state: RootState ) => state.cards;
+export const { setTvCards } = cardTvSlice.actions;
+export const getState = ( state: RootState ) => state.tvCards;
 export default cardTvSlice.reducer;
