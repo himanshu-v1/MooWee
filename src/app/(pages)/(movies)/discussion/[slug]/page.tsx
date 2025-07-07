@@ -80,7 +80,7 @@ export default function Page({ params }: { params: Promise<{ slug: string; }>;})
             });
             ele.querySelectorAll('a').forEach((e) => {
                 if(e.href.includes('/wiki/') && !e.href.includes('org')) {
-                    const href = `https://en.wikipedia.org${e.getAttribute('href')}`;
+                    const href = `${process.env.NEXT_PUBLIC_BASE_URL}${e.getAttribute('href')}`;
                     console.log(e.getAttribute('href'));
                     e.href = href;
                     e.target = "_blank";
