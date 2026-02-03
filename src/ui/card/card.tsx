@@ -4,6 +4,7 @@ import "./card.scss";
 import { useEffect, useState, useRef } from "react";
 import { ICard } from "../../types/typeCard";
 import { useRouter } from "next/navigation";
+import { getSessionItem } from "@/hooks/useSessionStorage";
 
 export default function Card({ cardData } : { cardData: ICard }) {
   const router = useRouter();
@@ -13,12 +14,14 @@ export default function Card({ cardData } : { cardData: ICard }) {
   const [timer, setTimer] = useState(setInterval(()=>{}, 0));
   const cardRef = useRef<HTMLAnchorElement | null>(null);
   const previousDeps = useRef({ isMouseIn, time });
+  const [isTv, setIsTv] = useState(false);
   let inte = 0;
 
   useEffect(() => {
     setData(cardData);
     transition();
     setTimeout(animateScroll, 500);
+    setIsTv(getSessionItem("wall") === 'tv');
   }, []);
 
   useEffect(() => {
@@ -127,7 +130,7 @@ export default function Card({ cardData } : { cardData: ICard }) {
             <span className="genre">{ Array.isArray(data.genre) ? data.genre?.join(", ") : data?.genre}</span>
             <span className="runtime">
               {
-                sessionStorage.getItem("wall") !== 'tv' ? 
+                !isTv ? 
                   <>
                     <i className="fa-solid fa-clock-rotate-left"></i>
                     <span>{time || data.time || "--"}</span> min

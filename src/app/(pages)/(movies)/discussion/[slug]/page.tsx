@@ -4,7 +4,7 @@ import { ICard, IAddnDetails } from "@/types/typeCard";
 import SubNav from "@/ui/subNav/subnav";
 import { RefObject, use, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-// import { useRouter } from "next/navigation";
+import { getSessionItem } from "@/hooks/useSessionStorage";
 import './discussion.scss';
 import { fetchData } from "@/lib/api/helper";
 import Rating from "@/ui/rating/rating";
@@ -28,18 +28,18 @@ export default function Page({ params }: { params: Promise<{ slug: string; }>;})
     const movieData = useAppSelector(state => state.cards);
     const tvData = useAppSelector(state => state.tvCards);
     const previousDep = useRef<deps>({data: {}, details: undefined});
-    const wall = sessionStorage.getItem('wall') || '';
 
     useEffect(() => {
+        const wallVal = getSessionItem('wall') || '';
         setBg(window.page?.current);
 
-        if(wall === 'movie') {
+        if(wallVal === 'movie') {
             setData(movieData);
         } else {
             setData(tvData);
         }
 
-        fetchData(wall, { id: slug }, 'addn').then(res => {
+        fetchData(wallVal, { id: slug }, 'addn').then(res => {
             setAdditionalDetails({...res});
             document.dispatchEvent(new CustomEvent('setData'));
         });
