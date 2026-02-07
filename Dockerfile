@@ -1,19 +1,5 @@
-# # Build Stage
-# FROM node:18-alpine AS build
-# WORKDIR /app
-# COPY package*.json ./
-# RUN npm install
-# COPY . .
-# RUN npm run build
-
-# # Production Stage
-# FROM nginx:stable-alpine AS production
-# COPY --from=build /app/build /usr/share/nginx/html
-# EXPOSE 80
-# CMD ["nginx", "-g", "daemon off;"]
-
 # Stage 1: Build the Next.js app
-FROM node:18-alpine AS builder
+FROM node:lts-alpine AS builder
 
 # Set working directory
 WORKDIR /moowee
@@ -28,7 +14,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Run the app in production
-FROM node:18-alpine AS runner
+FROM node:lts-alpine AS runner
 
 WORKDIR /app
 
