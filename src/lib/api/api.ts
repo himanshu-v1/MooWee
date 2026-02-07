@@ -1,5 +1,5 @@
 function getApiUrl() {
-  console.log('API URL:', process.env.SERVER_URL || process.env.NEXT_PUBLIC_API_URL);
+  console.log('API URL:', process.env.NEXT_PUBLIC_SERVER_URL, process.env.NEXT_PUBLIC_API_URL);
   return process.env.SERVER_URL || process.env.NEXT_PUBLIC_API_URL;
 }
 
