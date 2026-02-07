@@ -55,7 +55,7 @@ jobs:
           docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:latest
         # docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:v1
         env:
-          SERVER_URL: ${{ env.SERVER_URL }}
+          SERVER_URL: ${{ vars.SERVER_URL }}
 
 #============================Deployment============================#
 
