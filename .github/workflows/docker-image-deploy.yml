@@ -49,7 +49,7 @@ jobs:
       - name: 'Build and Push Docker image'
         run: |
           echo "Building docker image..."
-          docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:v1 -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:latest .
+          docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:v1 -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:latest --build-arg SERVER_URL="${{ vars.SERVER_URL }}" .
           echo "Docker image built successfully"
           echo "Pushing docker image to Google Cloud Registry..."
           docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:latest

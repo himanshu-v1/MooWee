@@ -1,6 +1,8 @@
 # Stage 1: Build the Next.js app
 FROM node:lts-alpine AS builder
 
+ARG SERVER_URL=""
+
 # Set working directory
 WORKDIR /moowee
 
@@ -11,6 +13,7 @@ RUN npm clean-install
 
 # Copy all files and build
 COPY . .
+RUN printf "$SERVER_URL" >> .env.production
 RUN npm run build
 
 # Stage 2: Run the app in production
