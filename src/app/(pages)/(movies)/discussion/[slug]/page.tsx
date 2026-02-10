@@ -4,7 +4,7 @@ import { ICard, IAddnDetails } from "@/types/typeCard";
 import SubNav from "@/ui/subNav/subnav";
 import { RefObject, use, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { getSessionItem } from "@/hooks/useSessionStorage";
+// import { getSessionItem } from "@/hooks/useSessionStorage";
 import './discussion.scss';
 import { fetchData } from "@/lib/api/helper";
 import Rating from "@/ui/rating/rating";
@@ -27,10 +27,11 @@ export default function Page({ params }: { params: Promise<{ slug: string; }>;})
     const [data, setData] = useState<Array<ICard>>([]);
     const movieData = useAppSelector(state => state.cards);
     const tvData = useAppSelector(state => state.tvCards);
+    const wallVal = useAppSelector(state => state.wallState.wall) || '';
     const previousDep = useRef<deps>({data: {}, details: undefined});
 
     useEffect(() => {
-        const wallVal = getSessionItem('wall') || '';
+        // const wallVal = getSessionItem('wall') || '';
         setBg(window.page?.current);
 
         if(wallVal === 'movie') {
@@ -42,6 +43,8 @@ export default function Page({ params }: { params: Promise<{ slug: string; }>;})
         fetchData(wallVal, { id: slug }, 'addn').then(res => {
             setAdditionalDetails({...res});
             document.dispatchEvent(new CustomEvent('setData'));
+        }).catch((err) => {
+            console.log('Server not reachable', err);
         });
     }, []);
 
@@ -119,7 +122,7 @@ export default function Page({ params }: { params: Promise<{ slug: string; }>;})
                         <Image src={details?.poster || process.env.NEXT_PUBLIC_DUMMY_IMG || ''} 
                             alt={details?.title || ''} width={100} height={100}/>
                     </div>
-                    <div className="content-wrapper">
+                    <div className="content-wrapper-main">
                         <p>{details?.year}</p>
                         <h3>{details?.title}</h3>
                         <div className="rating-wrapper">
@@ -130,6 +133,8 @@ export default function Page({ params }: { params: Promise<{ slug: string; }>;})
                         </div>
                         <p><span className="title">Director:</span>{details?.director}</p>
                         <p><span className="title">Genre:</span>{details?.genre}</p>
+                    </div>
+                    <div className="content-wrapper-sub">
                         <div className="producer-wrapper">
                             <span className="title">Producer:</span>
                             <span ref={prodrRef}>

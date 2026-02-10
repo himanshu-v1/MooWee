@@ -9,6 +9,20 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
+    
+    @media screen and (max-width: 768px) {
+        min-width: auto;
+        padding: 0;
+        border-radius: 10px;
+
+        div:has(i):first-child {
+            border-radius: 10px;
+        }
+        div:last-child {
+            display: none;
+        }
+    }
+
 
     div:first-child {
         display: flex;

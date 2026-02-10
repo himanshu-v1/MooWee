@@ -14,7 +14,7 @@
     margin-top: var(--top-buffer);
 
     @media screen and (max-width: 768px) {
-        padding: 0 40px 40px;
+        padding: 0 20px 20px;
     }
 
     &::before {
@@ -56,6 +56,11 @@
             background-size: 99%;
             margin-top: calc(var(--top-buffer) + 2px);
             animation: staticBG 1000s linear infinite, opaci 1s linear forwards;
+
+            @media screen and (max-width: 768px) {
+                background-size: 500%;
+                animation: staticBG 100000s linear infinite, opaci 1s linear forwards;
+            }
         }
     }
 

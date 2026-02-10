@@ -4,7 +4,9 @@ import "./card.scss";
 import { useEffect, useState, useRef } from "react";
 import { ICard } from "../../types/typeCard";
 import { useRouter } from "next/navigation";
-import { getSessionItem } from "@/hooks/useSessionStorage";
+// import { getSessionItem } from "@/hooks/useSessionStorage";
+import { useAppSelector } from "@/lib/hooks";
+import { isMobile } from "@/global/utilities/constants";
 
 export default function Card({ cardData } : { cardData: ICard }) {
   const router = useRouter();
@@ -15,13 +17,15 @@ export default function Card({ cardData } : { cardData: ICard }) {
   const cardRef = useRef<HTMLAnchorElement | null>(null);
   const previousDeps = useRef({ isMouseIn, time });
   const [isTv, setIsTv] = useState(false);
+  const wallState = useAppSelector(state => state.wallState.wall);
   let inte = 0;
 
   useEffect(() => {
     setData(cardData);
     transition();
     setTimeout(animateScroll, 500);
-    setIsTv(getSessionItem("wall") === 'tv');
+    // setIsTv(getSessionItem("wall") === 'tv');
+    setIsTv(wallState === 'tv');
   }, []);
 
   useEffect(() => {
@@ -56,7 +60,7 @@ export default function Card({ cardData } : { cardData: ICard }) {
   const handleMouse = (mouseIn?: boolean) => {
     const ele = window.page?.current;
     let leaveId: ReturnType<typeof setTimeout> | undefined = undefined;
-
+    const timeoutDuration = isMobile() ? 0 : 400;
     ele?.style?.setProperty("--image", `background: white`);
 
     if(!leaveId) {
@@ -72,7 +76,7 @@ export default function Card({ cardData } : { cardData: ICard }) {
           ele?.classList.add("static");
           ele?.classList.remove("animate");
         }
-      }, 400);
+      }, timeoutDuration);
     }
   };
 
@@ -87,9 +91,9 @@ export default function Card({ cardData } : { cardData: ICard }) {
   const animateScroll = () => {
     const titleEl = cardRef.current?.querySelector('.name span');
     const elWidth = titleEl?.getBoundingClientRect().width;
-    const parentWidth = cardRef.current!.getBoundingClientRect().width;
+    const parentWidth = cardRef.current?.getBoundingClientRect().width;
 
-    if(elWidth && elWidth > parentWidth) {
+    if(elWidth && parentWidth && elWidth > parentWidth) {
       titleEl?.parentElement?.classList.add('scroll');
     }
   };

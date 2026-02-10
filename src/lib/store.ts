@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cardReducer from "./feature/card/cardSlice";
 import cardTvReducer from "./feature/card/cardTvSlice";
+import wallStateReducer from "./feature/card/wallStateSlice";
 
 export const makeStore = () => {
     return configureStore({
       reducer: { 
         cards: cardReducer,
         tvCards: cardTvReducer,
+        wallState: wallStateReducer,
        },
     });
 };

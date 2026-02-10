@@ -4,6 +4,7 @@ import { ICard, IAddnDetails, initialAddnDetails } from "@/types/typeCard";
 import { getWallData, getMovieData, getWallTvData, getTvData } from "./api";
 import { toast } from "react-toastify";
 import { cards } from "@/test/data/card";
+import { discussions } from "@/test/data/discussion";
 // import { Interface } from "readline";
 // import { useAppStore } from "../hooks";
 
@@ -46,15 +47,19 @@ export async function fetchData(endpoint: string, args?: any): Promise<ICard[] |
             }, 3500);
         } else if (err.cause?.status === 204) {
             toast.error(`${err.message}!`);
+        } else {
+            toast.error("Server unreachable! Enjoy DUMDUM Data!");
         }
 
         if(endpoint === 'movie') {
-            return {...initialAddnDetails};
+            // return {...initialAddnDetails};
+            const movieDummyData = {...initialAddnDetails, ...discussions[0]};
+            return movieDummyData;
         }
         return [...cards, ...cards];
     }
 };
-// export const fetch = async (endpoint: string, args?: any) => {
 
+// export const fetch = async (endpoint: string, args?: any) => {
 //     return await fetchData(endpoint, args);
 // };

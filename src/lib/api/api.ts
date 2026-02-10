@@ -1,7 +1,5 @@
 function getApiUrl() {
-  console.log('API URL:', () => {
-    return process.env.NEXT_PUBLIC_SERVER_URL ? 'Prod URL' : 'Local URL';
-  });
+  console.log('API URL:', process.env.NEXT_PUBLIC_SERVER_URL ? 'Prod URL' : 'Local URL');
   return process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL;
 }
 
