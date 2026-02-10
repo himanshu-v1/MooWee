@@ -123,3 +123,13 @@
     20% { transform: translateX(0%); }
     100% { transform: translateX(-100%); }
 }
+
+@media screen and (max-width: 768px) {
+    .card {
+        width: 190px;
+
+        &.show {
+            transform: scale(0.7);
+        }
+    }
+}

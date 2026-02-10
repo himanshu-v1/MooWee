@@ -3,24 +3,34 @@ import Card from "@/ui/card/card";
 import SubNav from "@/ui/subNav/subnav";
 import { useEffect, useRef, useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
-import { useSessionStorage } from "@/hooks/useSessionStorage";
+// import { useSessionStorage } from "@/hooks/useSessionStorage";
 import { fetchData } from "@/lib/api/helper";
 import { setTvCards } from "@/lib/feature/card/cardTvSlice";
 import { ICard } from "@/types/typeCard";
+import wallBg from '@public/wall.jpg';
 import './wall.scss';
 
 export default function Landing() {
     const [cardsState, setCardsState] = useState<Array<ICard>>([]);
+    const [wall, setWall] = useState<string>('');
     const dispatch = useAppDispatch();
-    const [wall] = useSessionStorage<string | null>('wall', null);
     
+    // const [wall] = useSessionStorage<string | null>('wall', null);
+    const wallState = useAppSelector(state => state.wallState.wall);
     const movieCards = useAppSelector(state => state.cards);
     const tvCards = useAppSelector(state => state.tvCards);
     const wallRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        const ele = window.page?.current;
+        ele?.style?.setProperty("--image", `url(${wallBg.src})`);
+        ele?.classList?.add('static');
+    }, [])
+
+    useEffect(() => {
         setCardsState([] as ICard[]);
-    }, [wall, movieCards, tvCards]);
+        setWall(wallState || '');
+    }, [wallState, movieCards, tvCards]);
 
     useEffect(() => {
         if(wall === 'tv') {
@@ -32,7 +42,7 @@ export default function Landing() {
         } else {
             setCardsState(movieCards);
         }
-    }, [cardsState]);
+    }, [cardsState, wall]);
 
     const loadData = async () => {
         const data = await fetchData('tvs');
